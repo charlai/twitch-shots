@@ -1,33 +1,67 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet-async';
+import { TextInput } from './shared/Input';
 
-const Submit = styled.button``
+const Upload = styled.button`
+    background-color: #b9a3e3;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 0px;
+    width: 250px;
+    margin-bottom: 20px;
+`
 
 const NFTUploadContainer = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`
+
+const ImageContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+    box-shadow: rgb(0 0 0 / 10%) 1px 1px 4px;
+`
+
+const ImagePreview = styled.image`
+
 `
 
 const MetaContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 650px;
-    height: 800px;
+    width: 550px;
+    height: 350px;
     border-radius: 10px;
+    padding: 24px 36px;
+    margin: 50px 16px;
+    background: #FFFFFF;
+    box-shadow: rgb(0 0 0 / 10%) 1px 1px 4px;
 `
 
-const TitleInput = styled.input``
-
-const DescriptionInput = styled.input``
-
-const ImageContainer = styled.div`
-    border: 1px solid black;
-    height: 450px;
-    width: 450px;
-    border-radius: 10px;
+const MetaHeader = styled.h2`
+    margin-bottom: 60px;
 `
 
-const ImagePreview = styled.image``
+const TitleInput = styled(TextInput)`
+    margin-bottom: 20px;`
+
+const DescriptionInput = styled(TextInput)`
+    margin-bottom: 50px;`
+
+const Submit = styled.button`
+    background-color: #6441a5;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 0px;
+`
 
 
 export const SubmitNFT = (props) => {
@@ -37,7 +71,7 @@ export const SubmitNFT = (props) => {
 
     const hiddenFileInput = useRef(null);
     
-    const handleClick = event => {
+    const handleClick = e => {
         hiddenFileInput.current.click();
     };
     const handleImageUpload = e => {
@@ -60,13 +94,14 @@ export const SubmitNFT = (props) => {
             <NFTUploadContainer>
                 <ImageContainer>
                     {
-                        image.preview ? <img src={image.preview} /> : null
+                        image.preview ? <img src={image.preview} /> : null  
                     }
                 </ImageContainer>
                 <MetaContainer>
-                    <Submit onClick={handleClick}>
-                        Upload an NFT
-                    </Submit>
+                    <MetaHeader> Upload an NFT </MetaHeader>
+                    <Upload onClick={handleClick}>
+                        + Upload an NFT
+                    </Upload>
                     <input
                         type="file"
                         ref={hiddenFileInput}
@@ -74,18 +109,19 @@ export const SubmitNFT = (props) => {
                         style={{display: 'none'}}
                         accept="image/png, image/jpeg"
                     />
-                    <DescriptionInput 
-                        placeholder="Enter a title for your NFT"
+                    <TitleInput 
+                        placeholder="Title"
                         type="text"
                         value={description}
                         onChange={handleDescriptionChange}
                     />
-                    <TitleInput
-                        placeholder="Enter a description for your NFT"
+                    <DescriptionInput
+                        placeholder="Description"
                         type="text"
                         value={title}
                         onChange={handleTitleChange}
                     />
+                    <Submit> Mint NFT </Submit>
                 </MetaContainer>
             </NFTUploadContainer>
         </React.Fragment>
