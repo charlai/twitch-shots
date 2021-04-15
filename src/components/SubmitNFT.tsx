@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import Helmet from 'react-helmet-async';
 import { TextInput } from './shared/Input';
 
 const Upload = styled.button`
@@ -33,7 +32,7 @@ const ImagePreview = styled.image`
 
 `
 
-const MetaContainer = styled.div`
+const MetaContainer = styled.form`
     display: flex;
     flex-direction: column;
     width: 550px;
@@ -63,7 +62,6 @@ const Submit = styled.button`
     padding: 10px 0px;
 `
 
-
 export const SubmitNFT = (props) => {
     const [image, setImage] = useState({ preview: "", raw: "" });
     const [description, setDescription] = useState('');
@@ -89,6 +87,10 @@ export const SubmitNFT = (props) => {
         setTitle(e.target.value)
     };
 
+    const handleSubmit = e => {
+        e.preventDefault();
+    }
+
     return (
         <React.Fragment>
             <NFTUploadContainer>
@@ -97,7 +99,7 @@ export const SubmitNFT = (props) => {
                         image.preview ? <img src={image.preview} /> : null  
                     }
                 </ImageContainer>
-                <MetaContainer>
+                <MetaContainer onSubmit={handleSubmit}>
                     <MetaHeader> Upload an NFT </MetaHeader>
                     <Upload onClick={handleClick}>
                         + Upload an NFT
@@ -121,7 +123,7 @@ export const SubmitNFT = (props) => {
                         value={title}
                         onChange={handleTitleChange}
                     />
-                    <Submit> Mint NFT </Submit>
+                    <Submit type="submit"> Mint NFT </Submit>
                 </MetaContainer>
             </NFTUploadContainer>
         </React.Fragment>
